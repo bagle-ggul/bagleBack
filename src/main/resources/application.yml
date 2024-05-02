@@ -20,17 +20,17 @@ spring:
       host: 220.85.169.165
 
     mongodb:
-      username: ${MONGO_USERNAME} #root
-      password: ${MONGO_PASSWORD} # root
-      host: ${MONGO_HOST} #220.85.169.165
-      port: ${MONGO_PORT} #27017
-      database: ${MONGO_DATABASE} #chat
+      username: root
+      password: root
+      host: 220.85.169.165
+      port: 27017
+      database: chat
       authentication-database: admin
 
   datasource:
-    url: ${MARIA_URL} #jdbc:mariadb://localhost:3308/samcomo
-    username: ${MARIA_USERNAME} #samcomo
-    password: ${MARIA_PASSWORD} #samcomo
+    url: jdbc:mariadb://220.85.169.165:3306/samcomo
+    username: chan4760
+    password: Tjtocks178@
     driver-class-name: org.mariadb.jdbc.Driver
 
   servlet:
