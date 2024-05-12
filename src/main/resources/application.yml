@@ -39,6 +39,7 @@ spring:
       max-request-size: 10MB
 
   jwt:
+    expiration_time: 86400000
     secret: NulVADBtpXoUKTkzWFr+rCc5ckITa+A6uaLcZ9btLgg=
 
 #  security:
@@ -71,10 +72,8 @@ cloud:
 
 logging:
   level:
-    org:
-      springframework:
-        transaction:
-          interceptor: trace
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
 
 #fcm:
 #  key:
