@@ -26,6 +26,12 @@ public class GameResultService {
   public GameResultResponse saveGameResult(GameResultRequest request, Member member) {
     GameResult gameResult = request.toGameResult(member);
     gameResultRepository.save(gameResult);
+
+    // null exception 확인
+    if (member.getTotalScore() == null) {
+      member.updateScore(0);
+    }
+
     // 멤버 총점수 업데이트
     member.updateScore(request.getFinalScore());
     member.updateGameProgress("GAME_END");
