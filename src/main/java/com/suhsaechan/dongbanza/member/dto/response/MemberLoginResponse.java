@@ -9,7 +9,7 @@ import lombok.Getter;
 public class MemberLoginResponse {
   private Long id;
   private String email;
-  private String nickname;
+  private String characterName;
   private String accessToken; // 헤더에 포함된다
   private String refreshToken; // body에 포함시킨다
 
@@ -17,7 +17,7 @@ public class MemberLoginResponse {
     return MemberLoginResponse.builder()
         .id(member.getId())
         .email(member.getEmail())
-        .nickname(member.getNickname())
+        .characterName(member.getCharacterName())
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();
@@ -27,7 +27,7 @@ public class MemberLoginResponse {
     return MemberLoginResponse.builder()
         .id(response.getId())
         .email(response.getEmail())
-        .nickname(response.getNickname())
+        .characterName(response.getCharacterName())
         .refreshToken(response.getRefreshToken())
         .build();
   }
