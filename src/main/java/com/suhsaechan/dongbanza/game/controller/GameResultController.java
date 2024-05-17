@@ -1,12 +1,16 @@
 package com.suhsaechan.dongbanza.game.controller;
 
 import com.suhsaechan.dongbanza.common.api.docs.GameResultControllerDocs;
+import com.suhsaechan.dongbanza.common.exception.ErrorCode;
+import com.suhsaechan.dongbanza.common.exception.api.MemberException;
 import com.suhsaechan.dongbanza.common.jwt.dto.CustomUserDetails;
 import com.suhsaechan.dongbanza.game.dto.request.GameResultRequest;
 import com.suhsaechan.dongbanza.game.dto.response.GameRankingDto;
 import com.suhsaechan.dongbanza.game.dto.response.GameRankingPageDto;
 import com.suhsaechan.dongbanza.game.dto.response.GameResultResponse;
 import com.suhsaechan.dongbanza.game.service.GameResultService;
+import com.suhsaechan.dongbanza.member.domain.entity.Member;
+import com.suhsaechan.dongbanza.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +25,19 @@ import java.util.List;
 public class GameResultController implements GameResultControllerDocs {
 
   private final GameResultService gameResultService;
+  private final MemberRepository memberRepository;
 
   @PostMapping("/over")
   public ResponseEntity<GameResultResponse> saveGameResult(
       @RequestBody GameResultRequest gameResultRequest,
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
+
+    Member member = memberRepository.findById(
+            (long) Integer.parseInt(userDetails.getUsername()))
+        .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
     GameResultResponse gameResultResponse
-        = gameResultService.saveGameResult(gameResultRequest, userDetails.getMember());
+        = gameResultService.saveGameResult(gameResultRequest, member);
     return ResponseEntity.status(HttpStatus.CREATED).body(gameResultResponse);
   }
 

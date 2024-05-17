@@ -32,12 +32,12 @@ public class Member extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, unique = true)
+  @Column(unique = true)
   private String email;
 
   private String password;
 
-  private String characterName;
+  private String characterName = "주인공";
 
   @Enumerated(EnumType.STRING)
   private MemberRole role;
