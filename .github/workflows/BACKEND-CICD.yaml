@@ -40,8 +40,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:cache
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}bagel-back-container:cache
           cache-to: type=inline
 
   deploy:
@@ -58,7 +58,7 @@ jobs:
           script: |
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
-            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
-            echo $PW | sudo -S docker stop dongbanza-container || true
-            echo $PW | sudo -S docker rm dongbanza-container || true
-            echo $PW | sudo -S docker run -d -p 8083:8080 --name dongbanza-container ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            echo $PW | sudo -S docker stop bagel-back-container || true
+            echo $PW | sudo -S docker rm bagel-back-container || true
+            echo $PW | sudo -S docker run -d -p 8082:8080 --name bagel-back ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
