@@ -1,0 +1,64 @@
+name: BACKEND CI CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
+
+      - name: Docker setup
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:cache
+          cache-to: type=inline
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 2022
+          script: |
+            export PATH=$PATH:/usr/local/bin
+            export PW=${{ secrets.SERVER_PASSWORD }}
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
+            echo $PW | sudo -S docker stop dongbanza-container || true
+            echo $PW | sudo -S docker rm dongbanza-container || true
+            echo $PW | sudo -S docker run -d -p 8082:8080 --name dongbanza-container ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
