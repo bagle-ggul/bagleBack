@@ -29,6 +29,8 @@ public class MemberDto {
 
   private Double longitude;
 
+  private String refreshToken;
+
   public static MemberDto from(Member member){
     return MemberDto.builder()
         .id(member.getId())
@@ -41,6 +43,7 @@ public class MemberDto {
         .profileImageUrl(member.getProfileImageUrl())
         .latitude(member.getLatitude())
         .longitude(member.getLongitude())
+        .refreshToken(member.getRefreshToken())
         .build();
   }
 }

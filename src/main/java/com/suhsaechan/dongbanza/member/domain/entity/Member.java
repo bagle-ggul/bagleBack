@@ -46,6 +46,8 @@ public class Member extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private MemberStatus status;
 
+  private String refreshToken;
+
   @Setter
   private String profileImageUrl;
 
@@ -57,4 +59,8 @@ public class Member extends BaseEntity {
 
   @Setter
   private Double longitude;
+
+  public void updateRefreshToken(String refreshToken){
+    this.refreshToken = refreshToken;
+  }
 }
