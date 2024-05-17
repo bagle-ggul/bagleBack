@@ -10,18 +10,14 @@ import lombok.Getter;
 @Getter
 public class GameRankingDto {
   private String characterName;
-
   private Integer finalScore;
-
   private String mbti;
-
   private LocalDateTime gameDate;
-
   private Integer gamePlaySeconds;
-
+  private String memberEmail;
   private String details;
 
-  public static GameRankingDto from(Member member, GameResult gameResult){
+  public static GameRankingDto from(Member member, GameResult gameResult) {
     return GameRankingDto.builder()
         .characterName(member.getCharacterName())
         .finalScore(gameResult.getFinalScore())
@@ -29,6 +25,7 @@ public class GameRankingDto {
         .gameDate(gameResult.getGameDate())
         .gamePlaySeconds(gameResult.getGamePlaySeconds())
         .details(gameResult.getDetails())
+        .memberEmail(member.getEmail())
         .build();
   }
 }
