@@ -14,7 +14,7 @@ public class MemberDto {
 
   private String email;
 
-  private String nickname;
+  private String characterName;
 
   private String role;
 
@@ -22,7 +22,7 @@ public class MemberDto {
 
   private String profileImageUrl;
 
-  private Integer score;
+  private Integer totalScore;
 
   private LocalDate birthDate;
 
@@ -30,7 +30,7 @@ public class MemberDto {
 
   private String mbti;
 
-  private Integer regressionCount;
+  private Integer totalRegressionCount;
 
   private String gameProgress;
 
@@ -40,15 +40,15 @@ public class MemberDto {
     return MemberDto.builder()
         .id(member.getId())
         .email(member.getEmail())
-        .nickname(member.getNickname())
+        .characterName(member.getCharacterName())
         .role(String.valueOf(member.getRole()))
         .status(String.valueOf(member.getStatus()))
         .profileImageUrl(member.getProfileImageUrl())
-        .score(member.getScore())
+        .totalScore(member.getTotalScore())
         .birthDate(member.getBirthDate())
         .gender(member.getGender())
         .mbti(member.getMbti())
-        .regressionCount(member.getRegressionCount())
+        .totalRegressionCount(member.getTotalRegressionCount())
         .gameProgress(member.getGameProgress())
         .refreshToken(member.getRefreshToken())
         .build();

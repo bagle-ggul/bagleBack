@@ -37,8 +37,8 @@ public class Member extends BaseEntity {
 
   private String password;
 
-  @Column(name = "nickname", nullable = false, unique = true)
-  private String nickname;
+  @Column(name = "character_name", nullable = false, unique = true)
+  private String characterName;
 
   @Enumerated(EnumType.STRING)
   private MemberRole role;
@@ -51,8 +51,6 @@ public class Member extends BaseEntity {
   @Setter
   private String profileImageUrl;
 
-  private Integer score; // 호감도
-
   @Column(name = "birth_date", nullable = false)
   private LocalDate birthDate;
 
@@ -62,8 +60,11 @@ public class Member extends BaseEntity {
   @Column(name = "mbti", nullable = false)
   private String mbti;
 
-  @Column(name = "regression_count", nullable = false)
-  private Integer regressionCount;
+  @Column(name = "total_regression_count", nullable = false)
+  private Integer totalRegressionCount; // 사용자의 전체 게임의 회귀횟수
+
+  @Column(name = "total_score", nullable = false)
+  private Integer totalScore; // 총 획득한 호감도
 
   @Column(name = "game_progress", nullable = false)
   private String gameProgress;
@@ -73,11 +74,11 @@ public class Member extends BaseEntity {
   }
 
   public void increaseRegressionCount() {
-    this.regressionCount += 1;
+    this.totalRegressionCount += 1;
   }
 
   public void updateScore(int value) {
-    this.score += value;
+    this.totalScore += value;
   }
 
   public void updateGameProgress(String progress) {

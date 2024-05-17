@@ -41,15 +41,15 @@ public class MemberService {
         memberRepository.save(Member.builder()
             .email(form.getEmail())
             .password(passwordEncoder.encode(form.getPassword()))
-            .nickname(form.getNickname())
+            .characterName(form.getNickname())
             .role(MemberRole.USER)
             .status(MemberStatus.ACTIVE)
             .profileImageUrl(null)
-            .score(0) // 초기 호감도는 0으로 설정
+            .totalScore(0) // 초기 호감도는 0으로 설정
             .birthDate(form.getBirthDate())
             .gender(form.getGender())
             .mbti(form.getMbti())
-            .regressionCount(0) // 초기 회귀 횟수는 0으로 설정
+            .totalRegressionCount(0) // 초기 회귀 횟수는 0으로 설정
             .gameProgress("NOT_STARTED") // 초기 게임 진행 상태는 'NOT_STARTED'로 설정
             .refreshToken(null)
             .build()

@@ -38,6 +38,7 @@ public class MemberController implements MemberControllerDocs {
             "Bearer " + memberLoginResponse.getAccessToken())
         .body(MemberLoginResponse.exceptAccessToken(memberLoginResponse));
   }
+
   @LogMonitoringInvocation
   @PostMapping("/signup")
   public ResponseEntity<MemberDto> signup(
@@ -51,11 +52,6 @@ public class MemberController implements MemberControllerDocs {
   @GetMapping("/my-page")
   public ResponseEntity<MemberDto> getMemberById(
       @AuthenticationPrincipal CustomUserDetails userDetails) {
-
-    if (userDetails == null) {
-      log.error("userDetails == null");
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
 
     MemberDto memberDto
         = memberService.getMemberById(userDetails.getMember().getId());
