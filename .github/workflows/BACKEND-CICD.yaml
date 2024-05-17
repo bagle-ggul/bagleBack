@@ -61,4 +61,4 @@ jobs:
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
             echo $PW | sudo -S docker stop dongbanza-container || true
             echo $PW | sudo -S docker rm dongbanza-container || true
-            echo $PW | sudo -S docker run -d -p 8082:8080 --name dongbanza-container ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
+            echo $PW | sudo -S docker run -d -p 8083:8080 --name dongbanza-container ${{ secrets.DOCKERHUB_USERNAME }}/suhsaechan-back:latest
