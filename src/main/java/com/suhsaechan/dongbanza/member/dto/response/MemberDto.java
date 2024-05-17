@@ -1,6 +1,7 @@
 package com.suhsaechan.dongbanza.member.dto.response;
 
 import com.suhsaechan.dongbanza.member.domain.entity.Member;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,34 +16,40 @@ public class MemberDto {
 
   private String nickname;
 
-  private String phone;
-
-  private String address;
-
   private String role;
 
   private String status;
 
   private String profileImageUrl;
 
-  private Double latitude;
+  private Integer score;
 
-  private Double longitude;
+  private LocalDate birthDate;
+
+  private String gender;
+
+  private String mbti;
+
+  private Integer regressionCount;
+
+  private String gameProgress;
 
   private String refreshToken;
 
   public static MemberDto from(Member member){
     return MemberDto.builder()
         .id(member.getId())
-        .address(member.getAddress())
         .email(member.getEmail())
         .nickname(member.getNickname())
-        .phone(member.getPhone())
         .role(String.valueOf(member.getRole()))
         .status(String.valueOf(member.getStatus()))
         .profileImageUrl(member.getProfileImageUrl())
-        .latitude(member.getLatitude())
-        .longitude(member.getLongitude())
+        .score(member.getScore())
+        .birthDate(member.getBirthDate())
+        .gender(member.getGender())
+        .mbti(member.getMbti())
+        .regressionCount(member.getRegressionCount())
+        .gameProgress(member.getGameProgress())
         .refreshToken(member.getRefreshToken())
         .build();
   }

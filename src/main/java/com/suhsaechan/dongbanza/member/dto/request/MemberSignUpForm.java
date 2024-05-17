@@ -1,5 +1,6 @@
 package com.suhsaechan.dongbanza.member.dto.request;
 
+import java.time.LocalDate;
 import lombok.Getter;
 
 @Getter
@@ -10,11 +11,9 @@ public class MemberSignUpForm {
 
   private String nickname;
 
-  private String phone;
+  private String mbti;
 
-  private String address;
+  private LocalDate birthDate;
 
-  private Double latitude;
-
-  private Double longitude;
+  private String gender;
 }

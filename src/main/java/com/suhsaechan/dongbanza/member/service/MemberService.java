@@ -26,7 +26,6 @@ public class MemberService {
   private final JwtUtil jwtUtil;
   private final TokenService tokenService;
 
-
   public MemberDto save(MemberSignUpForm form) {
     // 이메일 중복 확인
     if (memberRepository.findByEmail(form.getEmail()).isPresent()) {
@@ -43,13 +42,15 @@ public class MemberService {
             .email(form.getEmail())
             .password(passwordEncoder.encode(form.getPassword()))
             .nickname(form.getNickname())
-            .phone(form.getPhone())
             .role(MemberRole.USER)
             .status(MemberStatus.ACTIVE)
             .profileImageUrl(null)
-            .address(form.getAddress())
-            .latitude(form.getLatitude())
-            .longitude(form.getLongitude())
+            .score(0) // 초기 호감도는 0으로 설정
+            .birthDate(form.getBirthDate())
+            .gender(form.getGender())
+            .mbti(form.getMbti())
+            .regressionCount(0) // 초기 회귀 횟수는 0으로 설정
+            .gameProgress("NOT_STARTED") // 초기 게임 진행 상태는 'NOT_STARTED'로 설정
             .refreshToken(null)
             .build()
         )
@@ -80,5 +81,4 @@ public class MemberService {
         .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
     return MemberDto.from(member);
   }
-
 }
