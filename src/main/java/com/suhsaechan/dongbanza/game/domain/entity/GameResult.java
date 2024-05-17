@@ -1,4 +1,4 @@
-package com.suhsaechan.dongbanza.game.domain;
+package com.suhsaechan.dongbanza.game.domain.entity;
 
 import com.suhsaechan.dongbanza.member.domain.entity.Member;
 import jakarta.persistence.Entity;
@@ -28,13 +28,15 @@ public class GameResult {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id", nullable = false)
-  private Member member;
+  private Member member; // 사용자
 
-  private Integer finalLikability;
+  private Integer finalScore;
 
   private Boolean success;
 
   private LocalDateTime gameDate;
+
+  private LocalDateTime gamePlayTime;
 
   private String details; // 게임 결과 세부 내용 (예: JSON 형식)
 
