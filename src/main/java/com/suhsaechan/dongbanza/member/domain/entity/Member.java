@@ -37,7 +37,7 @@ public class Member extends BaseEntity {
 
   private String password;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private String characterName;
 
   @Enumerated(EnumType.STRING)
