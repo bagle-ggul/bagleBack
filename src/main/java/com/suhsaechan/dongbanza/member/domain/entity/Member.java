@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @ToString(exclude = "password")
 @Entity
 @Builder
@@ -38,8 +40,6 @@ public class Member extends BaseEntity {
   @Column(name = "nickname", nullable = false, unique = true)
   private String nickname;
 
-  private String phone;
-
   @Enumerated(EnumType.STRING)
   private MemberRole role;
 
@@ -51,16 +51,36 @@ public class Member extends BaseEntity {
   @Setter
   private String profileImageUrl;
 
-  @Setter
-  private String address;
+  private Integer score; // 호감도
 
-  @Setter
-  private Double latitude;
+  @Column(name = "birth_date", nullable = false)
+  private LocalDate birthDate;
 
-  @Setter
-  private Double longitude;
+  @Column(name = "gender", nullable = false)
+  private String gender;
+
+  @Column(name = "mbti", nullable = false)
+  private String mbti;
+
+  @Column(name = "regression_count", nullable = false)
+  private Integer regressionCount;
+
+  @Column(name = "game_progress", nullable = false)
+  private String gameProgress;
 
   public void updateRefreshToken(String refreshToken){
     this.refreshToken = refreshToken;
+  }
+
+  public void increaseRegressionCount() {
+    this.regressionCount += 1;
+  }
+
+  public void updateScore(int value) {
+    this.score += value;
+  }
+
+  public void updateGameProgress(String progress) {
+    this.gameProgress = progress;
   }
 }

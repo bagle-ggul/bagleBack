@@ -1,6 +1,5 @@
 package com.suhsaechan.dongbanza.member.dto.request;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
