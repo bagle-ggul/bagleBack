@@ -1,5 +1,7 @@
-spring:
+server:
+  port: 8080
 
+spring:
   jpa:
     generate-ddl: true
     hibernate:
@@ -39,7 +41,9 @@ spring:
       max-request-size: 10MB
 
   jwt:
-    expiration_time: 86400000
+    secret-key: NulVADBtpXoUKTkzWFr+rCc5ckITa+A6uaLcZ9btLgg=
+    access-expiration-time: 86400000
+    refresh-expiration-time: 864000000
     secret: NulVADBtpXoUKTkzWFr+rCc5ckITa+A6uaLcZ9btLgg=
 
 #  security:
@@ -87,3 +91,5 @@ springdoc:
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
     path: /docs/swagger
+  api-docs:
+    path: /v3/api-docs

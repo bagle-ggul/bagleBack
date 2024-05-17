@@ -5,6 +5,7 @@ import com.suhsaechan.dongbanza.member.domain.entity.Member;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,12 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class CustomUserDetails implements UserDetails {
   private final Member member;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singletonList(new SimpleGrantedAuthority(member.getRole().name()));
+    return Collections.singletonList(new SimpleGrantedAuthority(member.getRole().getKey()));
   }
 
   @Override

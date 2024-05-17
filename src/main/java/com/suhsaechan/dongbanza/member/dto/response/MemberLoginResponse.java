@@ -8,19 +8,28 @@ import lombok.Getter;
 @Builder
 public class MemberLoginResponse {
   private Long id;
-
   private String email;
-
   private String nickname;
+  private String accessToken; // 헤더에 포함된다
+  private String refreshToken; // body에 포함시킨다
 
-  private String token;
-
-  public static MemberLoginResponse from(Member member, String token){
+  public static MemberLoginResponse from(Member member, String accessToken, String refreshToken) {
     return MemberLoginResponse.builder()
         .id(member.getId())
         .email(member.getEmail())
         .nickname(member.getNickname())
-        .token(token)
+        .accessToken(accessToken)
+        .refreshToken(refreshToken)
+        .build();
+  }
+
+  public static MemberLoginResponse exceptAccessToken(MemberLoginResponse response){
+    return MemberLoginResponse.builder()
+        .id(response.getId())
+        .email(response.getEmail())
+        .nickname(response.getNickname())
+        .refreshToken(response.getRefreshToken())
         .build();
   }
 }
+

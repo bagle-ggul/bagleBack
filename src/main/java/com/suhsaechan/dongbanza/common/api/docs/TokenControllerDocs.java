@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 
 public interface TokenControllerDocs {
 
-  @Operation(summary = "새로운 AccessToken 재발급",
-      description = "Refresh Token 을 받아서 새로운 AccessToken 을 재발급해준다.",
+  @Operation(summary = "새로운 AccessToken 재발급", description = "Refresh Token을 이용하여 새로운 AccessToken을 발급받는다.",
       responses = {
           @ApiResponse(responseCode = "201", description = "AccessToken 정상 재발급",
               content = @Content(schema = @Schema(implementation = CreateAccessTokenResponse.class)))
       })
-  ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request);
+  ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(
+      @RequestBody CreateAccessTokenRequest request);
 }
