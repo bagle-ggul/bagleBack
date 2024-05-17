@@ -36,7 +36,7 @@ public class GameResult {
 
   private LocalDateTime gameDate;
 
-  private LocalDateTime gamePlayTime;
+  private Integer gamePlaySeconds;
 
   private String details; // 게임 결과 세부 내용 (예: JSON 형식)
 

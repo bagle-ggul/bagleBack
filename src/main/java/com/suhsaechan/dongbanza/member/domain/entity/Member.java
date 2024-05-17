@@ -32,12 +32,12 @@ public class Member extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "email", nullable = false, unique = true)
+  @Column(nullable = false, unique = true)
   private String email;
 
   private String password;
 
-  @Column(name = "character_name", nullable = false, unique = true)
+  @Column(nullable = false, unique = true)
   private String characterName;
 
   @Enumerated(EnumType.STRING)
@@ -51,22 +51,22 @@ public class Member extends BaseEntity {
   @Setter
   private String profileImageUrl;
 
-  @Column(name = "birth_date", nullable = false)
+  @Column(nullable = false)
   private LocalDate birthDate;
 
-  @Column(name = "gender", nullable = false)
+  @Column(nullable = false)
   private String gender;
 
-  @Column(name = "mbti", nullable = false)
+  @Column(nullable = false)
   private String mbti;
 
-  @Column(name = "total_regression_count", nullable = false)
+  @Column(nullable = false)
   private Integer totalRegressionCount; // 사용자의 전체 게임의 회귀횟수
 
-  @Column(name = "total_score", nullable = false)
+  @Column(nullable = false)
   private Integer totalScore; // 총 획득한 호감도
 
-  @Column(name = "game_progress", nullable = false)
+  @Column(nullable = false)
   private String gameProgress;
 
   public void updateRefreshToken(String refreshToken){
