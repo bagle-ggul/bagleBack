@@ -1,27 +1,31 @@
 package com.suhsaechan.dongbanza.game.dto.response;
 
 import com.suhsaechan.dongbanza.game.domain.entity.GameResult;
+import com.suhsaechan.dongbanza.member.domain.entity.Member;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
-@Getter
 @Builder
-public class GameResultResponse {
+@Getter
+public class GameRankingDto {
+  private String characterName;
 
-  private Long id;
   private Integer finalScore;
-  private Boolean success;
+
+  private String mbti;
+
   private LocalDateTime gameDate;
+
   private Integer gamePlaySeconds;
+
   private String details;
 
-  public static GameResultResponse from(GameResult gameResult) {
-    return GameResultResponse.builder()
-        .id(gameResult.getId())
+  public static GameRankingDto from(Member member, GameResult gameResult){
+    return GameRankingDto.builder()
+        .characterName(member.getCharacterName())
         .finalScore(gameResult.getFinalScore())
-        .success(gameResult.getSuccess())
+        .mbti(member.getMbti())
         .gameDate(gameResult.getGameDate())
         .gamePlaySeconds(gameResult.getGamePlaySeconds())
         .details(gameResult.getDetails())

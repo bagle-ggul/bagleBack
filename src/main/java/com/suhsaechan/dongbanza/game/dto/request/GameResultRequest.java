@@ -14,14 +14,14 @@ public class GameResultRequest {
   private Integer finalScore;
   private Boolean success;
   private String details;
-  private LocalDateTime gamePlayTime;
+  private Integer gamePlaySeconds;
 
   public static GameResultRequest from(GameResult gameResult) {
     return GameResultRequest.builder()
         .finalScore(gameResult.getFinalScore())
         .success(gameResult.getSuccess())
         .details(gameResult.getDetails())
-        .gamePlayTime(gameResult.getGamePlayTime())
+        .gamePlaySeconds(gameResult.getGamePlaySeconds())
         .build();
   }
 
@@ -31,7 +31,7 @@ public class GameResultRequest {
         .finalScore(this.finalScore)
         .success(this.success)
         .gameDate(LocalDateTime.now())
-        .gamePlayTime(this.gamePlayTime)
+        .gamePlaySeconds(this.gamePlaySeconds)
         .details(this.details)
         .build();
   }

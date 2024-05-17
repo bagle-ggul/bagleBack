@@ -9,7 +9,7 @@ public class MemberSignUpForm {
 
   private String password;
 
-  private String nickname;
+  private String characterName;
 
   private String mbti;
 

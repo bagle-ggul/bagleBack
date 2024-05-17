@@ -33,7 +33,7 @@ public class MemberService {
     }
 
     // 닉네임 중복 확인
-    if (memberRepository.findByCharacterName(form.getNickname()).isPresent()) {
+    if (memberRepository.findByCharacterName(form.getCharacterName()).isPresent()) {
       throw new MemberException(ErrorCode.CHARACTER_NAME_ALREADY_EXISTS);
     }
 
@@ -41,7 +41,7 @@ public class MemberService {
         memberRepository.save(Member.builder()
             .email(form.getEmail())
             .password(passwordEncoder.encode(form.getPassword()))
-            .characterName(form.getNickname())
+            .characterName(form.getCharacterName())
             .role(MemberRole.USER)
             .status(MemberStatus.ACTIVE)
             .profileImageUrl(null)
