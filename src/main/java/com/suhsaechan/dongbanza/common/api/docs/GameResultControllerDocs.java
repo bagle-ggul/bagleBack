@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +24,7 @@ public interface GameResultControllerDocs {
           @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
           @ApiResponse(responseCode = "403", description = "인증 실패")
       })
-  ResponseEntity<Void> saveGameResult(@RequestBody GameResultRequest gameResultRequest,
+  ResponseEntity<GameResultResponse> saveGameResult(@RequestBody GameResultRequest gameResultRequest,
       @AuthenticationPrincipal CustomUserDetails userDetails);
 
   @Operation(summary = "내 게임 결과 조회", description = "로그인된 사용자의 게임 결과를 조회한다.",
