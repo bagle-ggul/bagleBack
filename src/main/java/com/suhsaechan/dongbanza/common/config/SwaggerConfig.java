@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
         description = "2024년 05월 17일 - 해커톤",
         version = "0.1v"),
     servers = {
-        @Server(url = "https://api.she-is-newyork-bagle.co.kr", description = "Main Sever"),
+        @Server(url = "https://api.she-is-newyork-bagel.co.kr", description = "Main Sever"),
         @Server(url = "http://localhost:8080", description = "Local Server")
     }
 )
@@ -44,7 +44,7 @@ public class SwaggerConfig {
                 .url("http://localhost:8080")
                 .description("Local Server"),
             new io.swagger.v3.oas.models.servers.Server()
-                .url("https://api.she-is-newyork-bagle.co.kr")
+                .url("https://api.she-is-newyork-bagel.co.kr")
                 .description("Main Server")
             )
         );
