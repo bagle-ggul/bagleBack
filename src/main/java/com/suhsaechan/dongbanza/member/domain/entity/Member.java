@@ -61,10 +61,10 @@ public class Member extends BaseEntity {
   private String mbti;
 
   @Column(nullable = false)
-  private Integer totalRegressionCount; // 사용자의 전체 게임의 회귀횟수
+  private Integer totalRegressionCount = 0; // 사용자의 전체 게임의 회귀횟수
 
   @Column(nullable = false)
-  private Integer totalScore; // 총 획득한 호감도
+  private Integer totalScore = 0; // 총 획득한 호감도
 
   @Column(nullable = false)
   private String gameProgress;
@@ -78,8 +78,12 @@ public class Member extends BaseEntity {
   }
 
   public void updateScore(int value) {
+    if (this.totalScore == null) {
+      this.totalScore = 0;
+    }
     this.totalScore += value;
   }
+
 
   public void updateGameProgress(String progress) {
     this.gameProgress = progress;
