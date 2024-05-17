@@ -31,7 +31,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
       "/api/token" // Access Token 재발급
   };
 
-
   @Override
   protected void doFilterInternal(HttpServletRequest request,
       HttpServletResponse response, FilterChain filterChain)

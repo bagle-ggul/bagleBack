@@ -61,6 +61,9 @@ public class WebSecurityConfig {
                     "/api/token" // Access Token 재발급
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/my-page").hasAuthority(MEMBER)
+                .requestMatchers(HttpMethod.POST, "/api/game/over").hasAuthority(MEMBER)
+                .requestMatchers(HttpMethod.GET, "/api/game/my-results").hasAuthority(MEMBER)
+                .requestMatchers(HttpMethod.DELETE, "/api/game/my-results/{gameResultId}").hasAuthority(MEMBER)
                 .anyRequest().authenticated()
             )
 
@@ -96,8 +99,8 @@ public class WebSecurityConfig {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOriginPatterns(
         Arrays.asList(
-            "https://api.suhsaechan-dbz.co.kr",
-            "https://www.suhsaechan-dbz.co.kr",
+            "https://api.she-is-newyork-bagel.co.kr",
+            "https://www.she-is-newyork-bagel.co.kr",
             "http://localhost:3000",
             "http://localhost:8080",
             "http://localhost:8082",
