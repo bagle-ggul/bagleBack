@@ -51,7 +51,6 @@ public class Member extends BaseEntity {
   @Setter
   private String profileImageUrl;
 
-  @Column(nullable = false)
   private LocalDate birthDate;
 
   @Column(nullable = false)
