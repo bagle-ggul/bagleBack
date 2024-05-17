@@ -12,11 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-    info = @Info(title = "동반자 DBZ",
-        description = "동네 반려동물 찾자",
+    info = @Info(title = "그녀를 살려라",
+        summary = "그녀가 사다준 뉴욕 베이글 (그뉴베)",
+        description = "2024년 05월 17일 - 해커톤",
         version = "0.1v"),
     servers = {
-        @Server(url = "https://api.suhsaechan-dbz.co.kr", description = "Main Sever"),
+        @Server(url = "https://api.she-is-newyork-bagle.co.kr", description = "Main Sever"),
         @Server(url = "http://localhost:8080", description = "Local Server")
     }
 )
@@ -43,7 +44,7 @@ public class SwaggerConfig {
                 .url("http://localhost:8080")
                 .description("Local Server"),
             new io.swagger.v3.oas.models.servers.Server()
-                .url("https://api.suhsaechan-dbz.co.kr")
+                .url("https://api.she-is-newyork-bagle.co.kr")
                 .description("Main Server")
             )
         );
