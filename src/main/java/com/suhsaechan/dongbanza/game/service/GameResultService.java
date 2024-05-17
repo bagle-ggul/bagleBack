@@ -3,6 +3,7 @@ package com.suhsaechan.dongbanza.game.service;
 import com.suhsaechan.dongbanza.game.domain.entity.GameResult;
 import com.suhsaechan.dongbanza.game.dto.request.GameResultRequest;
 import com.suhsaechan.dongbanza.game.dto.response.GameRankingDto;
+import com.suhsaechan.dongbanza.game.dto.response.GameRankingPageDto;
 import com.suhsaechan.dongbanza.game.dto.response.GameResultResponse;
 import com.suhsaechan.dongbanza.game.repository.GameResultRepository;
 import com.suhsaechan.dongbanza.member.domain.entity.Member;
@@ -58,11 +59,10 @@ public class GameResultService {
   }
 
   @Transactional(readOnly = true)
-  public List<GameRankingDto> getGameRankingList(int page, int size) {
+  public GameRankingPageDto getGameRankingList(int page, int size) {
     Pageable pageable = PageRequest.of(page, size);
     Page<GameResult> gameResultsPage = gameResultRepository.findAllByOrderByFinalScoreDesc(pageable);
-    return gameResultsPage.stream()
-        .map(gameResult -> GameRankingDto.from(gameResult.getMember(), gameResult))
-        .collect(Collectors.toList());
+    Page<GameRankingDto> rankingDtoPage = gameResultsPage.map(gameResult -> GameRankingDto.from(gameResult.getMember(), gameResult));
+    return new GameRankingPageDto(rankingDtoPage);
   }
 }
