@@ -27,8 +27,8 @@ public class MemberController implements MemberControllerDocs {
 
   private final MemberService memberService;
 
-  @LogMonitoringInvocation
   @PostMapping("login")
+  @LogMonitoringInvocation
   public ResponseEntity<MemberLoginResponse> login(
       @RequestBody MemberLoginForm form
   ) {
@@ -39,8 +39,8 @@ public class MemberController implements MemberControllerDocs {
         .body(MemberLoginResponse.exceptAccessToken(memberLoginResponse));
   }
 
-  @LogMonitoringInvocation
   @PostMapping("/signup")
+  @LogMonitoringInvocation
   public ResponseEntity<MemberDto> signup(
       @RequestBody MemberSignUpForm form
   ) {
@@ -48,8 +48,8 @@ public class MemberController implements MemberControllerDocs {
     return ResponseEntity.ok(savedMember);
   }
 
-  @LogMonitoringInvocation
   @GetMapping("/my-page")
+  @LogMonitoringInvocation
   public ResponseEntity<MemberDto> getMemberById(
       @AuthenticationPrincipal CustomUserDetails userDetails) {
 
