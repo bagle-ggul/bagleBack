@@ -4,6 +4,7 @@ import com.suhsaechan.dongbanza.common.api.docs.GameResultControllerDocs;
 import com.suhsaechan.dongbanza.common.jwt.dto.CustomUserDetails;
 import com.suhsaechan.dongbanza.game.dto.request.GameResultRequest;
 import com.suhsaechan.dongbanza.game.dto.response.GameRankingDto;
+import com.suhsaechan.dongbanza.game.dto.response.GameRankingPageDto;
 import com.suhsaechan.dongbanza.game.dto.response.GameResultResponse;
 import com.suhsaechan.dongbanza.game.service.GameResultService;
 import lombok.RequiredArgsConstructor;
@@ -32,14 +33,13 @@ public class GameResultController implements GameResultControllerDocs {
   }
 
   @GetMapping("/ranking")
-  public ResponseEntity<List<GameRankingDto>> getGameRanking(
+  public ResponseEntity<GameRankingPageDto> getGameRanking(
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-    List<GameRankingDto> gameRankingDtoList = gameResultService.getGameRankingList(
-        page, size);
-    return ResponseEntity.ok(gameRankingDtoList);
+    GameRankingPageDto gameRankingPageDto = gameResultService.getGameRankingList(page, size);
+    return ResponseEntity.ok(gameRankingPageDto);
   }
 
   @GetMapping("/my-results")
