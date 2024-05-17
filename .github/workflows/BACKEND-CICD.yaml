@@ -58,7 +58,7 @@ jobs:
           script: |
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
-            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
-            echo $PW | sudo -S docker stop bagel-back-container || true
-            echo $PW | sudo -S docker rm bagel-back-container || true
-            echo $PW | sudo -S docker run -d -p 8083:8080 --name bagel-back ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            echo $PW | sudo -S docker pull ***/bagel-back-container:latest
+            echo $PW | sudo -S docker stop bagel-back || true
+            echo $PW | sudo -S docker rm bagel-back || true
+            echo $PW | sudo -S docker run -d -p 8083:8080 --name bagel-back ***/bagel-back-container:latest
