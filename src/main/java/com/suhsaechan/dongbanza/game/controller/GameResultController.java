@@ -1,5 +1,6 @@
 package com.suhsaechan.dongbanza.game.controller;
 
+import com.suhsaechan.dongbanza.common.api.docs.GameResultControllerDocs;
 import com.suhsaechan.dongbanza.common.jwt.dto.CustomUserDetails;
 import com.suhsaechan.dongbanza.game.dto.request.GameResultRequest;
 import com.suhsaechan.dongbanza.game.dto.response.GameResultResponse;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/game")
 @RequiredArgsConstructor
-public class GameResultController {
+public class GameResultController implements GameResultControllerDocs {
   private final GameResultService gameResultService;
 
   @PostMapping("/over")
