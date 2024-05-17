@@ -30,7 +30,7 @@ spring:
       authentication-database: admin
 
   datasource:
-    url: jdbc:mariadb://220.85.169.165:3306/samcomo
+    url: jdbc:mariadb://220.85.169.165:3306/bagel
     username: chan4760
     password: Tjtocks178@
     driver-class-name: org.mariadb.jdbc.Driver
