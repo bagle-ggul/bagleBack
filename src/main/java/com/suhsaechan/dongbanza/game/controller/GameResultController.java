@@ -1,6 +1,5 @@
 package com.suhsaechan.dongbanza.game.controller;
 
-import com.amazonaws.Response;
 import com.suhsaechan.dongbanza.common.api.docs.GameResultControllerDocs;
 import com.suhsaechan.dongbanza.common.jwt.dto.CustomUserDetails;
 import com.suhsaechan.dongbanza.game.dto.request.GameResultRequest;
@@ -19,15 +18,17 @@ import java.util.List;
 @RequestMapping("/api/game")
 @RequiredArgsConstructor
 public class GameResultController implements GameResultControllerDocs {
+
   private final GameResultService gameResultService;
 
   @PostMapping("/over")
-  public ResponseEntity<Void> saveGameResult(
+  public ResponseEntity<GameResultResponse> saveGameResult(
       @RequestBody GameResultRequest gameResultRequest,
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-    gameResultService.saveGameResult(gameResultRequest, userDetails.getMember());
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    GameResultResponse gameResultResponse
+        = gameResultService.saveGameResult(gameResultRequest, userDetails.getMember());
+    return ResponseEntity.status(HttpStatus.CREATED).body(gameResultResponse);
   }
 
   @GetMapping("/ranking")
@@ -35,8 +36,9 @@ public class GameResultController implements GameResultControllerDocs {
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,
       @AuthenticationPrincipal CustomUserDetails userDetails
-  ){
-    List<GameRankingDto> gameRankingDtoList = gameResultService.getGameRankingList(page, size);
+  ) {
+    List<GameRankingDto> gameRankingDtoList = gameResultService.getGameRankingList(
+        page, size);
     return ResponseEntity.ok(gameRankingDtoList);
   }
 
@@ -44,7 +46,8 @@ public class GameResultController implements GameResultControllerDocs {
   public ResponseEntity<List<GameResultResponse>> getMyGameResults(
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-    List<GameResultResponse> gameResults = gameResultService.getGameResultsByMember(userDetails.getMember().getId());
+    List<GameResultResponse> gameResults = gameResultService.getGameResultsByMember(
+        userDetails.getMember().getId());
     return ResponseEntity.ok(gameResults);
   }
 
@@ -53,7 +56,8 @@ public class GameResultController implements GameResultControllerDocs {
       @PathVariable Long gameResultId,
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-    gameResultService.deleteGameResult(gameResultId, userDetails.getMember().getId());
+    gameResultService.deleteGameResult(gameResultId,
+        userDetails.getMember().getId());
     return ResponseEntity.noContent().build();
   }
 }

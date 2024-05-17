@@ -6,6 +6,7 @@ import com.suhsaechan.dongbanza.game.dto.response.GameRankingDto;
 import com.suhsaechan.dongbanza.game.dto.response.GameResultResponse;
 import com.suhsaechan.dongbanza.game.repository.GameResultRepository;
 import com.suhsaechan.dongbanza.member.domain.entity.Member;
+import com.suhsaechan.dongbanza.member.repository.MemberRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class GameResultService {
 
   private final GameResultRepository gameResultRepository;
+  private final MemberRepository memberRepository;
 
-  public void saveGameResult(GameResultRequest request, Member member) {
+  public GameResultResponse saveGameResult(GameResultRequest request, Member member) {
     GameResult gameResult = request.toGameResult(member);
     gameResultRepository.save(gameResult);
+    // 멤버 총점수 업데이트
+    member.updateScore(request.getFinalScore());
+    member.updateGameProgress("GAME_END");
+    if(!request.getSuccess()){
+      // member 총회귀횟수 업데이트
+      member.increaseRegressionCount();
+    }
+    Member savedMember = memberRepository.save(member);
+    System.out.println(savedMember);
+    return GameResultResponse.from(gameResult);
   }
 
   public List<GameResultResponse> getGameResultsByMember(Long memberId) {
