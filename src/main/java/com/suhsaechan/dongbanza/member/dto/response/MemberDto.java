@@ -44,11 +44,11 @@ public class MemberDto {
         .role(String.valueOf(member.getRole()))
         .status(String.valueOf(member.getStatus()))
         .profileImageUrl(member.getProfileImageUrl())
-        .totalScore(member.getTotalScore())
+        .totalScore(member.getTotalScore() != null ? member.getTotalScore() : 0)
         .birthDate(member.getBirthDate())
         .gender(member.getGender())
         .mbti(member.getMbti())
-        .totalRegressionCount(member.getTotalRegressionCount())
+        .totalRegressionCount(member.getTotalRegressionCount() != null ? member.getTotalRegressionCount() : 0)
         .gameProgress(member.getGameProgress())
         .refreshToken(member.getRefreshToken())
         .build();
