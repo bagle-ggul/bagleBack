@@ -32,11 +32,6 @@ public class MemberService {
       throw new MemberException(ErrorCode.EMAIL_ALREADY_EXISTS);
     }
 
-    // 닉네임 중복 확인
-    if (memberRepository.findByCharacterName(form.getCharacterName()).isPresent()) {
-      throw new MemberException(ErrorCode.CHARACTER_NAME_ALREADY_EXISTS);
-    }
-
     return MemberDto.from(
         memberRepository.save(Member.builder()
             .email(form.getEmail())
