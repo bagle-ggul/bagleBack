@@ -37,7 +37,6 @@ public class Member extends BaseEntity {
 
   private String password;
 
-  @Column(nullable = false)
   private String characterName;
 
   @Enumerated(EnumType.STRING)
@@ -53,19 +52,14 @@ public class Member extends BaseEntity {
 
   private LocalDate birthDate;
 
-  @Column(nullable = false)
   private String gender;
 
-  @Column(nullable = false)
   private String mbti;
 
-  @Column(nullable = false)
   private Integer totalRegressionCount = 0; // 기본값 설정
 
-  @Column(nullable = false)
   private Integer totalScore = 0; // 기본값 설정
 
-  @Column(nullable = false)
   private String gameProgress;
 
   public void updateRefreshToken(String refreshToken){
