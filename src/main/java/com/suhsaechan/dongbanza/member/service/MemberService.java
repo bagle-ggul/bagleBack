@@ -33,8 +33,8 @@ public class MemberService {
     }
 
     // 닉네임 중복 확인
-    if (memberRepository.findByNickname(form.getNickname()).isPresent()) {
-      throw new MemberException(ErrorCode.NICKNAME_ALREADY_EXISTS);
+    if (memberRepository.findByCharacterName(form.getNickname()).isPresent()) {
+      throw new MemberException(ErrorCode.CHARACTER_NAME_ALREADY_EXISTS);
     }
 
     return MemberDto.from(

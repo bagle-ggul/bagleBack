@@ -14,7 +14,9 @@ public interface TokenControllerDocs {
   @Operation(summary = "새로운 AccessToken 재발급", description = "Refresh Token을 이용하여 새로운 AccessToken을 발급받는다.",
       responses = {
           @ApiResponse(responseCode = "201", description = "AccessToken 정상 재발급",
-              content = @Content(schema = @Schema(implementation = CreateAccessTokenResponse.class)))
+              content = @Content(schema = @Schema(implementation = CreateAccessTokenResponse.class))),
+          @ApiResponse(responseCode = "400", description = "잘못된 Refresh Token"),
+          @ApiResponse(responseCode = "401", description = "만료된 Refresh Token")
       })
   ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(
       @RequestBody CreateAccessTokenRequest request);
