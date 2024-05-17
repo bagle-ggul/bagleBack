@@ -1,11 +1,15 @@
 package com.suhsaechan.dongbanza.common.jwt.service;
 
 import com.suhsaechan.dongbanza.common.jwt.dto.CustomUserDetails;
+import com.suhsaechan.dongbanza.member.domain.constants.MemberRole;
+import com.suhsaechan.dongbanza.member.domain.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,32 +21,29 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class JwtUtil {
+  @Value("${spring.jwt.secret-key}")
+  private String secretKey;
 
-  private final long accessTokenExpTime;
-  private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
+  @Value("${spring.jwt.access-expiration-time}")
+  private Long accessTokenExpTime;
+  @Value("${spring.jwt.refresh-expiration-time}")
+  private Long refreshTokenExpTime;
+
   private final String ROLE ="role";
 
-  // JWT 비밀키, 만료시간 정의 생성자
-  public JwtUtil(
-//      @Value("${jwt.secret}") String secretKey
-      @Value("${spring.jwt.expiration_time}")
-      long accessTokenExpTime
-  ) {
-//    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-//    this.key = Keys.hmacShaKeyFor(keyBytes);
-    this.accessTokenExpTime = accessTokenExpTime;
+  // Access Token 생성
+  public String createAccessToken(CustomUserDetails customUserDetails) {
+    return createToken(customUserDetails, this.accessTokenExpTime);
   }
 
-  // Access Token 생성
-  public String createAccessToken(CustomUserDetails customUserDetails,
-      long accessTokenExpTime) {
-    return createAccessToken(customUserDetails, this.accessTokenExpTime);
+  // Refresh Token 생성
+  public String createRefreshToken(CustomUserDetails customUserDetails) {
+    return createToken(customUserDetails, this.refreshTokenExpTime);
   }
 
   private String createToken(CustomUserDetails customUserDetails,
@@ -53,6 +54,9 @@ public class JwtUtil {
     Map<String, Object> headers = new HashMap<>();
     headers.put("typ", "JWT");
 
+    //TODO:
+    log.info("JwtUtil : createToken :"+ ROLE+" "+ customUserDetails.getMember().getRole());
+
     return Jwts.builder()
         .header()
         .add(headers)
@@ -61,8 +65,8 @@ public class JwtUtil {
         .issuedAt(now)
         .expiration(new Date(now.getTime() + expiredAt))
         .subject(customUserDetails.getUsername())
-        .claim(ROLE, customUserDetails.getAuthorities())
-        .signWith(secretKey)
+        .claim(ROLE, customUserDetails.getMember().getRole())
+        .signWith(getSigningKey())
         .compact();
   }
 
@@ -70,7 +74,7 @@ public class JwtUtil {
   public boolean validateToken(String token) {
     try {
       Jwts.parser()
-          .verifyWith(secretKey)
+          .verifyWith(getSigningKey())
           .build()
           .parseSignedClaims(token);
       return true;
@@ -90,19 +94,35 @@ public class JwtUtil {
   // 토큰 기반 -> 인증 정보 가져옴 // 누구의 토큰인가
   public Authentication getAuthentication(String token) {
     Claims claims = getClaims(token);
+    log.info("JwtUtil : getAuthentication :" + claims.toString());
 
     Set<SimpleGrantedAuthority> authorities
         = Collections.singleton(new SimpleGrantedAuthority(claims.get(ROLE, String.class)));
+    log.info("JwtUtil : getAuthentication :"+ ROLE+" "+ authorities.size());
 
-    return new UsernamePasswordAuthenticationToken(
-        new User(claims.getSubject(), "", authorities), token, authorities);
+    Member member = Member.builder()
+        .id(Long.valueOf(claims.getSubject()))
+        .role(MemberRole.valueOf(claims.get(ROLE, String.class)))
+        .build();
+
+    CustomUserDetails userDetails = CustomUserDetails.builder()
+        .member(member)
+        .build();
+
+    return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
   }
 
   public Claims getClaims(String token) {
     return Jwts.parser()
-        .decryptWith(secretKey)
+        .verifyWith(getSigningKey())
         .build()
-        .parseEncryptedClaims(token).getPayload();
+        .parseSignedClaims(token)
+        .getPayload();
+  }
+
+  private SecretKey getSigningKey() {
+    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    return Keys.hmacShaKeyFor(keyBytes);
   }
 
 }
