@@ -32,12 +32,8 @@ public class GameResultController implements GameResultControllerDocs {
       @RequestBody GameResultRequest gameResultRequest,
       @AuthenticationPrincipal CustomUserDetails userDetails
   ) {
-
-    Member member = memberRepository.findById(
-            (long) Integer.parseInt(userDetails.getUsername()))
-        .orElseThrow(() -> new MemberException(ErrorCode.MEMBER_NOT_FOUND));
     GameResultResponse gameResultResponse
-        = gameResultService.saveGameResult(gameResultRequest, member);
+        = gameResultService.saveGameResult(gameResultRequest, Long.parseLong(userDetails.getUsername()));
     return ResponseEntity.status(HttpStatus.CREATED).body(gameResultResponse);
   }
 
