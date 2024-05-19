@@ -29,7 +29,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
       "/docs/**", // Swagger
       "/v3/api-docs/**", // Swagger
       "/api/token", // Access Token 재발급
-      "/actuator/prometheus" // Prometheus 엔드포인트 허용
+      "/actuator", // Prometheus 엔드포인트 허용
+      "/favicon.ico" // Prometheus
   };
 
   @Override
@@ -43,7 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     // WHITELIST URL 인 경우 -> JWT Token Validation 하지않는다.
     if (Arrays.stream(WHITELIST)
         .anyMatch(whiteListUri -> antPathMatcher.match(whiteListUri, URI))) {
-      log.info("WHILELIST 주소로 토큰검사 안함");
+      logger.info("Whitelisted URI: " + URI);
       // Token 검사 생략
       filterChain.doFilter(request, response);
       return;
@@ -52,11 +53,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     // 이외 주소 Token 검사
     String token = getAccessToken(authorizationHeader);
 
+    // 토큰 검사 통과 로직
     if (jwtUtil.validateToken(token)) {
-      log.info("Token 검사로직 실행");
+      log.info("Token 검사로직 통과: " + URI );
       Authentication authentication = jwtUtil.getAuthentication(token);
-      log.info("doFilterInternal() token : "+ token);
-      log.info("doFilterInternal() authentication : "+ authentication.toString());
       SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 

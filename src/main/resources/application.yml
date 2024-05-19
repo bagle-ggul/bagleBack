@@ -77,10 +77,3 @@ management:
     web:
       exposure:
         include: prometheus
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-  endpoint:
-    prometheus:
-      enabled: true
