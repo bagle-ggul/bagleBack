@@ -13,26 +13,26 @@ spring:
     open-in-view: false
 
   mvc:
-    path match:
+    pathmatch:
       matching-strategy: ant_path_matcher
 
   data:
     redis:
       port: 6379
-      host: 220.85.169.165
+      host: ${REDIS_HOST}
 
     mongodb:
-      username: root
-      password: root
-      host: 220.85.169.165
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+      host: ${MONGODB_HOST}
       port: 27017
-      database: chat
+      database: ${MONGODB_DATABASE}
       authentication-database: admin
 
   datasource:
-    url: jdbc:mariadb://220.85.169.165:3306/bagel
-    username: chan4760
-    password: Tjtocks178@
+    url: jdbc:mariadb://${DB_HOST}:3306/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
 
   servlet:
@@ -41,50 +41,28 @@ spring:
       max-request-size: 10MB
 
   jwt:
-    secret-key: NulVADBtpXoUKTkzWFr+rCc5ckITa+A6uaLcZ9btLgg=
+    secret-key: ${JWT_SECRET_KEY}
     access-expiration-time: 86400000
     refresh-expiration-time: 864000000
-    secret: NulVADBtpXoUKTkzWFr+rCc5ckITa+A6uaLcZ9btLgg=
-
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-name: google
-#            client-id: ${GOOGLE_CLIENT_ID} #212547587168-l87h9u4c4c6rq52g6e74dvafo15a2q61.apps.googleusercontent.com
-#            client-secret: ${GOOGLE_CLIENT_SECRET} #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
-#            redirect-uri: http://localhost:8080/login/oauth2/code/google
-#            authorization-grant-type: authorization_code
-#            scope:
-#              - email
-#              - profile
 
 cloud:
   aws:
     credentials:
       instance-profile: true
-      secret-key: ${AWS_SECRET_KEY} # AWS S3 secret-key
-      access-key: ${AWS_ACCESS_KEY} # AWS S3 access-key
+      secret-key: ${AWS_SECRET_KEY}
+      access-key: ${AWS_ACCESS_KEY}
     region:
       static: ap-northeast-2
       auto: false
     stack:
       auto: false
     s3:
-      bucket: ${AWS_BUCKET} #samcomo
+      bucket: ${AWS_BUCKET}
 
 logging:
   level:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
-
-#fcm:
-#  key:
-#    path: firebase/firebase-adminsdk.json
-#    scope: https://www.googleapis.com/auth/cloud-platform
-#  api:
-#    url: https://fcm.googleapis.com/v1/projects/${FCM-PROJECT-ID}/messages:send
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
