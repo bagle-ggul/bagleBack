@@ -67,12 +67,4 @@ jobs:
               -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              # -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-              # -e MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }} \
-              # -e MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }} \
-              # -e MONGODB_HOST=${{ secrets.MONGODB_HOST }} \
-              # -e MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }} \
-              # -e AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} \
-              # -e AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} \
-              # -e AWS_BUCKET=${{ secrets.AWS_BUCKET }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
