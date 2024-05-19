@@ -44,8 +44,8 @@ dependencies {
     // maria DB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-    // mongo DB
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+//    // mongo DB
+//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     // AWS
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
@@ -56,6 +56,7 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
     // prometheus
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
