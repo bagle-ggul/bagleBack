@@ -31,7 +31,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
       "/api/token", // Access Token 재발급
       "/actuator/**", // Prometheus 엔드포인트 허용
       "/favicon.ico", // Prometheus
-      "/targets" // Prometheus
+      "/targets", // Prometheus
+      "/api/test"
   };
 
   @Override

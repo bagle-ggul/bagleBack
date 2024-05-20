@@ -61,7 +61,8 @@ public class WebSecurityConfig {
                     "/api/token", // Access Token 재발급
                     "/actuator/prometheus", // Prometheus 엔드포인트 허용
                     "/favicon.ico", // Prometheus
-                    "/api/v1/**"
+                    "/api/v1/**",
+                    "/api/test"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/my-page").hasAuthority(MEMBER)
                 .requestMatchers(HttpMethod.POST, "/api/game/over").hasAuthority(MEMBER)
