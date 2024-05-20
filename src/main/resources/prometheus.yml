@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: 'bagel-back'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['220.85.169.165:8083']

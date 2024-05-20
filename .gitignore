@@ -39,3 +39,5 @@ out/
 ### CICD ####
 ./.github/workflows
 .github/workflows/BACKEND-CICD.yaml
+.github/workflows/BACKEND-CICD.yaml
+/.github/workflows
