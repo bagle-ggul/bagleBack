@@ -56,23 +56,15 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 2022
           script: |
-                    export PATH=$PATH:/usr/local/bin
-                    export PW=${{ secrets.SERVER_PASSWORD }}
-                    echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
-                    echo $PW | sudo -S docker stop bagel-back || true
-                    echo $PW | sudo -S docker rm bagel-back || true
-                    echo $PW | sudo -S docker run -d -p 8083:8080 --name bagel-back \
-                    -e DB_HOST=${{ secrets.DB_HOST }} \
-                    -e DB_NAME=${{ secrets.DB_NAME }} \
-                    -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-                    -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-                    -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-            #              -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-            #              -e MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }} \
-            #              -e MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }} \
-            #              -e MONGODB_HOST=${{ secrets.MONGODB_HOST }} \
-            #              -e MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }} \
-            #              -e AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} \
-            #              -e AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} \
-            #              -e AWS_BUCKET=${{ secrets.AWS_BUCKET }} \
-                    ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            export PATH=$PATH:/usr/local/bin
+            export PW=${{ secrets.SERVER_PASSWORD }}
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            echo $PW | sudo -S docker stop bagel-back || true
+            echo $PW | sudo -S docker rm bagel-back || true
+            echo $PW | sudo -S docker run -d -p 8083:8080 --name bagel-back \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
+              -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
