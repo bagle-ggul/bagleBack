@@ -59,9 +59,9 @@ public class WebSecurityConfig {
                     "/docs/**", // Swagger
                     "/v3/api-docs/**", // Swagger
                     "/api/token", // Access Token 재발급
-                    "/actuator/**", // Prometheus 엔드포인트 허용
+                    "/actuator/prometheus", // Prometheus 엔드포인트 허용
                     "/favicon.ico", // Prometheus
-                    "targets"
+                    "/api/v1/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/my-page").hasAuthority(MEMBER)
                 .requestMatchers(HttpMethod.POST, "/api/game/over").hasAuthority(MEMBER)
