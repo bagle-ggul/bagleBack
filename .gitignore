@@ -41,3 +41,6 @@ out/
 .github/workflows/BACKEND-CICD.yaml
 .github/workflows/BACKEND-CICD.yaml
 /.github/workflows
+
+### YML
+./src/main/resources/application.yml
