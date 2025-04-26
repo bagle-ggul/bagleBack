@@ -19,6 +19,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # Create application.yml directly from the GitHub secret
+      - name: Create application.yml file
+        run: |
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
+          # Verify file was created (without showing contents)
+          ls -la src/main/resources/
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -59,21 +67,31 @@ jobs:
             set -e
             # Get current Seoul time (KST, UTC+9)
             SEOUL_TIME=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M:%S')
+            # Set PATH to include Docker binaries
             export PATH=$PATH:/usr/local/bin:/usr/bin:/volume1/@appstore/Docker/usr/bin
+            # Store password for sudo commands
             export PW=${{ secrets.SUH_SERVER_PASSWORD }}
+            
+            # Check Docker availability
             echo "Docker path check:"
             which docker || echo "Docker not found"
             echo "Docker version:"
             echo $PW | sudo -S docker --version || echo "Docker version check failed"
+            
+            # Pull latest image
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            
+            # Stop and remove existing container if it exists
             echo $PW | sudo -S docker stop bagel-back || true
             echo $PW | sudo -S docker rm bagel-back || true
+            
+            # Run new container with environment variables
             echo $PW | sudo -S docker run -d -p 8093:8080 --name bagel-back \
-              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_HOST='suh-project.synology.me' \
               -e DB_NAME=${{ secrets.DB_NAME }} \
-              -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              -e DB_USERNAME='kimchi' \
+              -e DB_PASSWORD='Kimchi123@' \
+              -e JWT_SECRET_KEY='jX7NP2k5qW8zT1aR3bY6cL9dF4mG0hS4vZ5xC8pQ7w2E3r6t' \
               -e SEOUL_TIME="$SEOUL_TIME" \
               -e TZ=Asia/Seoul \
               ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
