@@ -1,3 +1,4 @@
+```yaml
 name: BACKEND CI CD
 
 on:
@@ -46,19 +47,25 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          host: ${{ secrets.SUH_SERVER_HOST }}
+          username: ${{ secrets.SUH_SERVER_USER }}
+          password: ${{ secrets.SUH_SERVER_PASSWORD }}
           port: 2022
           script: |
+            set -e
             # Get current Seoul time (KST, UTC+9)
             SEOUL_TIME=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M:%S')
-            export PW=${{ secrets.SERVER_PASSWORD }}
+            export PATH=$PATH:/usr/local/bin:/usr/bin:/volume1/@appstore/Docker/usr/bin
+            export PW=${{ secrets.SUH_SERVER_PASSWORD }}
+            echo "Docker path check:"
+            which docker || echo "Docker not found"
+            echo "Docker version:"
+            echo $PW | sudo -S docker --version || echo "Docker version check failed"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
             echo $PW | sudo -S docker stop bagel-back || true
             echo $PW | sudo -S docker rm bagel-back || true
@@ -69,4 +76,6 @@ jobs:
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               -e SEOUL_TIME="$SEOUL_TIME" \
+              -e TZ=Asia/Seoul \
               ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+```
