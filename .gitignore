@@ -36,11 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-### CICD ####
-./.github/workflows
-.github/workflows/BACKEND-CICD.yaml
-.github/workflows/BACKEND-CICD.yaml
-/.github/workflows
-
 ### YML
 ./src/main/resources/application.yml
