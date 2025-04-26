@@ -58,10 +58,11 @@ jobs:
           script: |
             # Get current Seoul time (KST, UTC+9)
             SEOUL_TIME=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M:%S')
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
-            docker stop bagel-back || true
-            docker rm bagel-back || true
-            docker run -d -p 8093:8080 --name bagel-back \
+            export PW=${{ secrets.SERVER_PASSWORD }}
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bagel-back-container:latest
+            echo $PW | sudo -S docker stop bagel-back || true
+            echo $PW | sudo -S docker rm bagel-back || true
+            echo $PW | sudo -S docker run -d -p 8083:8080 --name bagel-back \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
